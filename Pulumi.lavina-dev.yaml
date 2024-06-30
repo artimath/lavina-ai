@@ -2,3 +2,6 @@ config:
   lavina-ai:errorDocument: error.html
   lavina-ai:indexDocument: index.html
   lavina-ai:path: ./www
+  lavina-ai:domain: lavina.helaix.com
+environment:
+  - lavina-dev

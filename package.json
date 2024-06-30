@@ -1,12 +1,23 @@
 {
-    "name": "lavina-ai",
-    "devDependencies": {
-        "@types/node": "^18",
-        "typescript": "^5.0.0"
-    },
-    "dependencies": {
-        "@pulumi/gcp": "^7.0.0",
-        "@pulumi/synced-folder": "^0.0.9",
-        "@pulumi/pulumi": "^3.113.0"
-    }
+  "name": "lavina-ai",
+  "scripts": {
+    "lint": "eslint **.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "@typescript-eslint/parser": "^7.14.1",
+    "eslint": "^9.6.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-functional": "^6.6.0",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^7.14.1"
+  },
+  "dependencies": {
+    "@pulumi/cloudflare": "^5.33.1",
+    "@pulumi/pulumi": "^3.113.0",
+    "wrangler": "^3.62.0"
+  }
 }
