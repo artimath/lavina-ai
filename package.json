@@ -1,19 +1,28 @@
 {
   "name": "lavina-ai",
-  "version": "0.0.0",
-  "private": true,
   "scripts": {
-    "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
-    "start": "wrangler dev",
-    "test": "vitest",
-    "cf-typegen": "wrangler types"
+    "lint": "eslint **.ts",
+    "dev": "vite serve www"
   },
   "devDependencies": {
-    "@cloudflare/vitest-pool-workers": "^0.4.5",
-    "@cloudflare/workers-types": "^4.20240620.0",
-    "typescript": "^5.4.5",
-    "vitest": "1.5.0",
-    "wrangler": "^3.60.3"
+    "@types/node": "^18",
+    "@typescript-eslint/parser": "^7.14.1",
+    "eslint": "^9.6.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-functional": "^6.6.0",
+    "globals": "^15.6.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^7.14.1",
+    "vite": "^5.3.2",
+    "wrangler": "^3.62.0"
+  },
+  "dependencies": {
+    "@pulumi/cloudflare": "^5.33.1",
+    "@pulumi/pulumi": "^3.113.0"
+  },
+  "volta": {
+    "node": "20.15.0"
   }
 }
