@@ -1,36 +1,107 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as cloudflare from "@pulumi/cloudflare";
-import * as fs from "fs";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import * as cloudflare from '@pulumi/cloudflare';
+import * as pulumi from '@pulumi/pulumi';
 
+// Import the program's configuration settings.
 const config = new pulumi.Config();
-const accountId = config.require("accountId");
-const zoneId = config.require("zoneId");
-const domain = config.require("domain")
+const accountID = config.require('cf-account-id');
+const domain = config.require('domain');
+// const errorDocument = config.get('errorDocument') || 'error.html';
 
-// A Worker script to invoke
-export const script = new cloudflare.WorkerScript("hello-world-script", {
-  accountId: accountId,
-  name: "hello-world",
-  // Read the content of the worker from a file
-  content: fs.readFileSync("./app/worker.ts", "utf8"),
-  module: true,
+// https://www.pulumi.com/registry/packages/cloudflare/api-docs/pagesproject/
+const lavinaPages = new cloudflare.PagesProject('lavina_pages', {
+  accountId: accountID,
+  name: 'lavina-ai-pages',
+  productionBranch: 'master',
+  buildConfig: {
+    buildCaching: false,
+    buildCommand: 'exit 0',
+    destinationDir: './www',
+    rootDir: './',
+  },
+  deploymentConfigs: {},
+  source: {
+    config: {
+      productionBranch: 'master',
+      deploymentsEnabled: true,
+      owner: 'artimath',
+      prCommentsEnabled: true,
+      repoName: 'lavina-ai',
+    },
+    type: 'github',
+  },
 });
 
-// A Worker route to serve requests and the Worker script
-export const route = new cloudflare.WorkerRoute("hello-world-route", {
-  zoneId: zoneId,
-  pattern: "hello-world." + domain,
-  scriptName: script.name,
+// DNS Record
 
+const helaixDomainZone = cloudflare.getZone({
+  name: 'helaix.com',
+  accountId: accountID,
 });
 
-// A DNS record to access the route from the domain
-export const record = new cloudflare.Record("hello-world-record", {
-  zoneId: zoneId,
-  name: script.name,
-  value: "192.0.2.1",
-  type: "A",
-  proxied: true
+const record = new cloudflare.Record('lavina.helaix.com', {
+  name: domain,
+  zoneId: helaixDomainZone.then((zone) => zone.id),
+  type: 'CNAME',
+  value: lavinaPages.subdomain,
 });
 
-export const url = route.pattern
+// Pages Domain
+const lavina_domain = new cloudflare.PagesDomain('lavina.helaix.com', {
+  accountId: accountID,
+  projectName: lavinaPages.name,
+  domain: domain,
+});
+
+lavina_domain.domain.apply((domain) => console.log(domain));
+
+// // Create a storage bucket and configure it as a website.
+// const bucket = new gcp.storage.Bucket("bucket", {
+//     location: "US",
+//     website: {
+//         mainPageSuffix: indexDocument,
+//         notFoundPage: errorDocument,
+//     },
+// });
+
+// // Create an IAM binding to allow public read access to the bucket.
+// const bucketIamBinding = new gcp.storage.BucketIAMBinding("bucket-iam-binding", {
+//     bucket: bucket.name,
+//     role: "roles/storage.objectViewer",
+//     members: ["allUsers"],
+// });
+
+// // Use a synced folder to manage the files of the website.
+// const syncedFolder = new synced_folder.GoogleCloudFolder("synced-folder", {
+//     path: path,
+//     bucketName: bucket.name,
+// });
+
+// // Enable the storage bucket as a CDN.
+// const backendBucket = new gcp.compute.BackendBucket("backend-bucket", {
+//     bucketName: bucket.name,
+//     enableCdn: true,
+// });
+
+// // Provision a global IP address for the CDN.
+// const ip = new gcp.compute.GlobalAddress("ip", {});
+
+// // Create a URLMap to route requests to the storage bucket.
+// const urlMap = new gcp.compute.URLMap("url-map", {defaultService: backendBucket.selfLink});
+
+// // Create an HTTP proxy to route requests to the URLMap.
+// const httpProxy = new gcp.compute.TargetHttpProxy("http-proxy", {urlMap: urlMap.selfLink});
+
+// // Create a GlobalForwardingRule rule to route requests to the HTTP proxy.
+// const httpForwardingRule = new gcp.compute.GlobalForwardingRule("http-forwarding-rule", {
+//     ipAddress: ip.address,
+//     ipProtocol: "TCP",
+//     portRange: "80",
+//     target: httpProxy.selfLink,
+// });
+
+// // Export the URLs and hostnames of the bucket and CDN.
+// export const originURL = pulumi.interpolate`https://storage.googleapis.com/${bucket.name}/index.html`;
+// export const originHostname = pulumi.interpolate`storage.googleapis.com/${bucket.name}`;
+// export const cdnURL = pulumi.interpolate`http://${ip.address}`;
+// export const cdnHostname = ip.address;
