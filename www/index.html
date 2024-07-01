@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>lavina's smart tools</title>
+    <script src="https://unpkg.com/htmx.org@2.0.0"></script>
   </head>
   <body>
     <div style="width: 600px; margin: auto auto; text-align: center">
@@ -54,11 +55,13 @@
         </div>
       </div>
       <div>get your smart tools here!</div>
-      <form action="#" method="post" style="margin-top: 20px">
+      <form hx-post="/api"
+      hx-target="#result>p" style="margin-top: 20px">
         <input
           type="text"
           name="prompt"
           placeholder="Enter your prompt here"
+          value="What's the weather like in hawaii?"
           style="width: 70%; padding: 10px; margin-right: 10px"
         />
         <button
@@ -74,6 +77,20 @@
           Try it out!
         </button>
       </form>
+      <div id="result" style="
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        font-family: Arial, sans-serif;
+        min-height: 100px;
+        max-width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+      ">
+        <p style="color: #666; font-style: italic;">Your result will appear here...</p>
+      </div>
       <footer
         style="
           position: fixed;

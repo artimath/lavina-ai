@@ -2,7 +2,6 @@
 import * as cloudflare from '@pulumi/cloudflare';
 import * as pulumi from '@pulumi/pulumi';
 
-// Import the program's configuration settings.
 const config = new pulumi.Config();
 const accountID = config.require('cf-account-id');
 const domain = config.require('domain');
@@ -10,47 +9,47 @@ const domain = config.require('domain');
 
 // https://www.pulumi.com/registry/packages/cloudflare/api-docs/pagesproject/
 const lavinaPages = new cloudflare.PagesProject('lavina_pages', {
-  accountId: accountID,
-  name: 'lavina-ai-pages',
-  productionBranch: 'master',
-  buildConfig: {
-    buildCaching: false,
-    buildCommand: 'exit 0',
-    destinationDir: './www',
-    rootDir: './',
-  },
-  deploymentConfigs: {},
-  source: {
-    config: {
-      productionBranch: 'master',
-      deploymentsEnabled: true,
-      owner: 'artimath',
-      prCommentsEnabled: true,
-      repoName: 'lavina-ai',
-    },
-    type: 'github',
-  },
+	accountId: accountID,
+	name: 'lavina-ai-pages',
+	productionBranch: 'master',
+	buildConfig: {
+		buildCaching: false,
+		buildCommand: 'exit 0',
+		destinationDir: './www',
+		rootDir: './',
+	},
+	deploymentConfigs: {},
+	source: {
+		config: {
+			productionBranch: 'master',
+			deploymentsEnabled: true,
+			owner: 'artimath',
+			prCommentsEnabled: true,
+			repoName: 'lavina-ai',
+		},
+		type: 'github',
+	},
 });
 
 // DNS Record
 
 const helaixDomainZone = cloudflare.getZone({
-  name: 'helaix.com',
-  accountId: accountID,
+	name: 'helaix.com',
+	accountId: accountID,
 });
 
 const record = new cloudflare.Record('lavina.helaix.com', {
-  name: domain,
-  zoneId: helaixDomainZone.then((zone) => zone.id),
-  type: 'CNAME',
-  value: lavinaPages.subdomain,
+	name: domain,
+	zoneId: helaixDomainZone.then((zone) => zone.id),
+	type: 'CNAME',
+	value: lavinaPages.subdomain,
 });
 
 // Pages Domain
 const lavina_domain = new cloudflare.PagesDomain('lavina.helaix.com', {
-  accountId: accountID,
-  projectName: lavinaPages.name,
-  domain: domain,
+	accountId: accountID,
+	projectName: lavinaPages.name,
+	domain: domain,
 });
 
 lavina_domain.domain.apply((domain) => console.log(domain));
