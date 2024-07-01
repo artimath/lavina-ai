@@ -137,11 +137,11 @@ var De = (t, e, r) => {
     c === -1 ? l = "" : (l = t.slice(c + 1, a === -1 ? void 0 : a), s && (l = re(l))), r ? (n[o] && Array.isArray(n[o]) || (n[o] = []), n[o].push(l)) : n[o] ?? (n[o] = l);
   }
   return e ? n[e] : n;
-}, Be = ye, qe = (t, e) => ye(t, e, !0), ne = decodeURIComponent, C, x, fe, be = (fe = class {
+}, Be = ye, qe = (t, e) => ye(t, e, !0), ne = decodeURIComponent, C, O, fe, be = (fe = class {
   constructor(t, e = "/", r = [[]]) {
     d(this, "raw");
     b(this, C);
-    b(this, x);
+    b(this, O);
     d(this, "routeIndex", 0);
     d(this, "path");
     d(this, "bodyCache", {});
@@ -152,25 +152,25 @@ var De = (t, e, r) => {
       const n = Object.keys(e)[0];
       return n ? e[n].then((i) => (n === "json" && (i = JSON.stringify(i)), new Response(i)[t]())) : e[t] = r[t]();
     });
-    this.raw = t, this.path = e, p(this, x, r), p(this, C, {});
+    this.raw = t, this.path = e, p(this, O, r), p(this, C, {});
   }
   param(t) {
     return t ? this.getDecodedParam(t) : this.getAllDecodedParams();
   }
   getDecodedParam(t) {
-    const e = h(this, x)[0][this.routeIndex][1][t], r = this.getParamValue(e);
+    const e = h(this, O)[0][this.routeIndex][1][t], r = this.getParamValue(e);
     return r ? /\%/.test(r) ? ne(r) : r : void 0;
   }
   getAllDecodedParams() {
-    const t = {}, e = Object.keys(h(this, x)[0][this.routeIndex][1]);
+    const t = {}, e = Object.keys(h(this, O)[0][this.routeIndex][1]);
     for (const r of e) {
-      const s = this.getParamValue(h(this, x)[0][this.routeIndex][1][r]);
+      const s = this.getParamValue(h(this, O)[0][this.routeIndex][1][r]);
       s && typeof s == "string" && (t[r] = /\%/.test(s) ? ne(s) : s);
     }
     return t;
   }
   getParamValue(t) {
-    return h(this, x)[1] ? h(this, x)[1][t] : t;
+    return h(this, O)[1] ? h(this, O)[1][t] : t;
   }
   query(t) {
     return Be(this.url, t);
@@ -218,12 +218,12 @@ var De = (t, e, r) => {
     return this.raw.method;
   }
   get matchedRoutes() {
-    return h(this, x)[0].map(([[, t]]) => t);
+    return h(this, O)[0].map(([[, t]]) => t);
   }
   get routePath() {
-    return h(this, x)[0].map(([[, t]]) => t)[this.routeIndex].path;
+    return h(this, O)[0].map(([[, t]]) => t)[this.routeIndex].path;
   }
-}, C = new WeakMap(), x = new WeakMap(), fe), Ue = {
+}, C = new WeakMap(), O = new WeakMap(), fe), Ue = {
   Stringify: 1,
   BeforeStream: 2,
   Stream: 3
@@ -234,7 +234,7 @@ var De = (t, e, r) => {
       c.filter(Boolean).map((o) => ve(o, e, !1, s, n))
     ).then(() => n[0])
   )) : Promise.resolve(t);
-}, We = "text/plain; charset=UTF-8", se = (t, e = {}) => (Object.entries(e).forEach(([r, s]) => t.set(r, s)), t), k, K, I, D, A, g, m, O, $, V, T, N, z, G, pe, Y = (pe = class {
+}, We = "text/plain; charset=UTF-8", se = (t, e = {}) => (Object.entries(e).forEach(([r, s]) => t.set(r, s)), t), k, K, I, D, A, g, m, x, $, V, T, N, z, G, pe, Y = (pe = class {
   constructor(t, e) {
     b(this, k);
     b(this, K);
@@ -246,7 +246,7 @@ var De = (t, e, r) => {
     b(this, A);
     b(this, g);
     b(this, m);
-    b(this, O);
+    b(this, x);
     b(this, $, !0);
     b(this, V);
     b(this, T);
@@ -290,7 +290,7 @@ var De = (t, e, r) => {
         });
       }
       const s = typeof e == "number" ? e : h(this, D);
-      h(this, m) ?? p(this, m, {}), h(this, g) ?? p(this, g, new Headers()), se(h(this, g), h(this, m)), h(this, O) && (h(this, O).headers.forEach((n, i) => {
+      h(this, m) ?? p(this, m, {}), h(this, g) ?? p(this, g, new Headers()), se(h(this, g), h(this, m)), h(this, x) && (h(this, x).headers.forEach((n, i) => {
         var a, c;
         i === "set-cookie" ? (a = h(this, g)) == null || a.append(i, n) : (c = h(this, g)) == null || c.set(i, n);
       }), se(h(this, g), h(this, m))), r ?? (r = {});
@@ -339,26 +339,26 @@ var De = (t, e, r) => {
     throw Error("This context has no ExecutionContext");
   }
   get res() {
-    return p(this, $, !1), h(this, O) || p(this, O, new Response("404 Not Found", { status: 404 }));
+    return p(this, $, !1), h(this, x) || p(this, x, new Response("404 Not Found", { status: 404 }));
   }
   set res(t) {
-    if (p(this, $, !1), h(this, O) && t) {
-      h(this, O).headers.delete("content-type");
-      for (const [e, r] of h(this, O).headers.entries())
+    if (p(this, $, !1), h(this, x) && t) {
+      h(this, x).headers.delete("content-type");
+      for (const [e, r] of h(this, x).headers.entries())
         if (e === "set-cookie") {
-          const s = h(this, O).headers.getSetCookie();
+          const s = h(this, x).headers.getSetCookie();
           t.headers.delete("set-cookie");
           for (const n of s)
             t.headers.append("set-cookie", n);
         } else
           t.headers.set(e, r);
     }
-    p(this, O, t), this.finalized = !0;
+    p(this, x, t), this.finalized = !0;
   }
   get var() {
     return { ...h(this, I) };
   }
-}, k = new WeakMap(), K = new WeakMap(), I = new WeakMap(), D = new WeakMap(), A = new WeakMap(), g = new WeakMap(), m = new WeakMap(), O = new WeakMap(), $ = new WeakMap(), V = new WeakMap(), T = new WeakMap(), N = new WeakMap(), z = new WeakMap(), G = new WeakMap(), pe), ue = (t, e, r) => (s, n) => {
+}, k = new WeakMap(), K = new WeakMap(), I = new WeakMap(), D = new WeakMap(), A = new WeakMap(), g = new WeakMap(), m = new WeakMap(), x = new WeakMap(), $ = new WeakMap(), V = new WeakMap(), T = new WeakMap(), N = new WeakMap(), z = new WeakMap(), G = new WeakMap(), pe), ue = (t, e, r) => (s, n) => {
   let i = -1;
   return a(0);
   async function a(c) {
@@ -379,8 +379,8 @@ var De = (t, e, r) => {
       }
     return o && (s.finalized === !1 || l) && (s.res = o), s;
   }
-}, y = "ALL", ke = "all", Ke = ["get", "post", "put", "delete", "options", "patch"], Ee = "Can not add a route since the matcher is already built.", xe = class extends Error {
-}, Ve = Symbol("composedHandler"), ze = (t) => t.text("404 Not Found", 404), de = (t, e) => "getResponse" in t ? t.getResponse() : (console.error(t), e.text("Internal Server Error", 500)), j, ge, Oe = (ge = class {
+}, y = "ALL", ke = "all", Ke = ["get", "post", "put", "delete", "options", "patch"], Ee = "Can not add a route since the matcher is already built.", Oe = class extends Error {
+}, Ve = Symbol("composedHandler"), ze = (t) => t.text("404 Not Found", 404), de = (t, e) => "getResponse" in t ? t.getResponse() : (console.error(t), e.text("Internal Server Error", 500)), j, ge, xe = (ge = class {
   constructor(e = {}) {
     d(this, "get");
     d(this, "post");
@@ -433,7 +433,7 @@ var De = (t, e, r) => {
     delete e.strict, Object.assign(this, e), this.getPath = s ? e.getPath ?? me : Me;
   }
   clone() {
-    const e = new Oe({
+    const e = new xe({
       router: this.router,
       getPath: this.getPath
     });
@@ -530,7 +530,7 @@ var De = (t, e, r) => {
     })();
   }
 }, j = new WeakMap(), ge), ee = "[^/]+", U = ".*", W = "(?:|/.*)", q = Symbol(), Ge = new Set(".\\+*[^]$()");
-function Xe(t, e) {
+function Je(t, e) {
   return t.length === 1 ? e.length === 1 ? t < e ? -1 : 1 : -1 : e.length === 1 || t === U || t === W ? 1 : e === U || e === W ? -1 : t === ee ? 1 : e === ee ? -1 : t.length === e.length ? t < e ? -1 : 1 : e.length - t.length;
 }
 var ie = class {
@@ -577,13 +577,13 @@ var ie = class {
     l.insert(c, r, s, n, i);
   }
   buildRegExpStr() {
-    const r = Object.keys(this.children).sort(Xe).map((s) => {
+    const r = Object.keys(this.children).sort(Je).map((s) => {
       const n = this.children[s];
       return (typeof n.varIndex == "number" ? `(${s})@${n.varIndex}` : Ge.has(s) ? `\\${s}` : s) + n.buildRegExpStr();
     });
     return typeof this.index == "number" && r.unshift(`#${this.index}`), r.length === 0 ? "" : r.length === 1 ? r[0] : "(?:" + r.join("|") + ")";
   }
-}, Je = class {
+}, Xe = class {
   constructor() {
     d(this, "context", { varIndex: 0 });
     d(this, "root", new ie());
@@ -631,7 +631,7 @@ function Ye() {
 }
 function Ze(t) {
   var l;
-  const e = new Je(), r = [];
+  const e = new Xe(), r = [];
   if (t.length === 0)
     return Qe;
   const s = t.map(
@@ -646,13 +646,13 @@ function Ze(t) {
     try {
       E = e.insert(w, f, S);
     } catch (P) {
-      throw P === q ? new xe(w) : P;
+      throw P === q ? new Oe(w) : P;
     }
     S || (r[f] = v.map(([P, _]) => {
       const H = /* @__PURE__ */ Object.create(null);
       for (_ -= 1; _ >= 0; _--) {
-        const [X, J] = E[_];
-        H[X] = J;
+        const [J, X] = E[_];
+        H[J] = X;
       }
       return [P, H];
     }));
@@ -778,7 +778,7 @@ var et = class {
           c.add(...o);
         }), a = c.match(t, e);
       } catch (o) {
-        if (o instanceof xe)
+        if (o instanceof Oe)
           continue;
         throw o;
       }
@@ -865,12 +865,12 @@ var et = class {
           }
           if (l === "")
             continue;
-          const [X, J, M] = _, F = w.children[X], ae = i.slice(c).join("/");
+          const [J, X, M] = _, F = w.children[J], ae = i.slice(c).join("/");
           if (M instanceof RegExp && M.test(ae)) {
-            H[J] = ae, r.push(...this.gHSets(F, t, w.params, H));
+            H[X] = ae, r.push(...this.gHSets(F, t, w.params, H));
             continue;
           }
-          (M === !0 || M instanceof RegExp && M.test(l)) && typeof X == "string" && (H[J] = l, u === !0 ? (r.push(...this.gHSets(F, t, H, w.params)), F.children["*"] && r.push(...this.gHSets(F.children["*"], t, H, w.params))) : (F.params = H, f.push(F)));
+          (M === !0 || M instanceof RegExp && M.test(l)) && typeof J == "string" && (H[X] = l, u === !0 ? (r.push(...this.gHSets(F, t, H, w.params)), F.children["*"] && r.push(...this.gHSets(F.children["*"], t, H, w.params))) : (F.params = H, f.push(F)));
         }
       }
       n = f;
@@ -895,7 +895,7 @@ var et = class {
   match(t, e) {
     return this.node.search(t, e);
   }
-}, st = class extends Oe {
+}, st = class extends xe {
   constructor(t = {}) {
     super(t), this.router = t.router ?? new tt({
       routers: [new et(), new rt()]
@@ -904,44 +904,40 @@ var et = class {
 };
 const oe = new st();
 oe.post("/api/*", async (t) => {
-  const e = t.req.query("prompt");
+  console.log(t.req.raw);
+  const e = await t.req.formData(), r = e.get("prompt");
   console.log(e), console.log(t.req.url);
-  const r = await t.env.AI.run(
-    "@hf/nousresearch/hermes-2-pro-mistral-7b",
+  const s = [
     {
-      messages: [
-        {
-          role: "user",
-          content: e
-        }
-      ],
-      tools: [
-        {
-          name: "getWeather",
-          description: "Return the weather for a latitude and longitude",
-          parameters: {
-            type: "object",
-            properties: {
-              latitude: {
-                type: "string",
-                description: "The latitude for the given location"
-              },
-              longitude: {
-                type: "string",
-                description: "The longitude for the given location"
-              }
-            },
-            required: ["latitude", "longitude"]
-          }
-        }
-      ]
+      role: "user",
+      content: r || ""
     }
-  );
-  return new Response(JSON.stringify(r.tool_calls));
+  ], n = [
+    {
+      name: "getWeather",
+      description: "Return the weather for a latitude and longitude",
+      parameters: {
+        type: "object",
+        properties: {
+          latitude: {
+            type: "string",
+            description: "The latitude for the given location"
+          },
+          longitude: {
+            type: "string",
+            description: "The longitude for the given location"
+          }
+        },
+        required: ["latitude", "longitude"]
+      }
+    }
+  ], i = await t.env.AI.run("@hf/nousresearch/hermes-2-pro-mistral-7b", {
+    messages: s,
+    tools: n
+  });
+  return console.log(i), i.tool_calls ? new Response(JSON.stringify(i.tool_calls)) : new Response(JSON.stringify(i));
 });
-oe.get("*", (t) => t.env.ASSETS.fetch(
-  t.req.raw
-));
+oe.get("*", (t) => t.env.ASSETS.fetch(t.req.raw));
 const at = {
   fetch: oe.fetch
 };
