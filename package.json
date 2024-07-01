@@ -2,7 +2,9 @@
 	"name": "lavina-ai",
 	"scripts": {
 		"lint": "eslint **.ts",
-		"dev": "vite serve www"
+		"dev-html": "vite serve www",
+		"dev-worker": "vite build && wrangler pages dev --live-reload",
+		"build": "vite build"
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20240620.0",
@@ -22,6 +24,7 @@
 	"dependencies": {
 		"@pulumi/cloudflare": "^5.33.1",
 		"@pulumi/pulumi": "^3.113.0",
+		"hono": "^4.4.10",
 		"itty-router": "^5.0.17"
 	},
 	"volta": {

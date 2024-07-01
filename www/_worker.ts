@@ -1,13 +1,24 @@
-import { AutoRouter } from 'itty-router';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// import { AutoRouter } from 'itty-router';
+import { Hono } from 'hono';
 
-const router = AutoRouter();
+import { Env } from './worker-configuration';
 
-router
-  .get('/api/:path', ({ request, env, ctx }) => {
+// const router = AutoRouter();
+
+const app = new Hono<{ Bindings: Env }>();
+
+app
+  .get('/api/*', ( ctx ) => {
     return new Response('Hello, world!');
   })
-  .all('*', ({ request, env, ctx }) => {
-    return env.ASSETS.fetch(request);
-  });
 
-export default router;
+app.get('*', (ctx) => {
+    return ctx.env.ASSETS.fetch(ctx.req.raw
+
+    );
+  }) satisfies ExportedHandler<Env>;
+
+export default {
+  fetch: app.fetch,
+};

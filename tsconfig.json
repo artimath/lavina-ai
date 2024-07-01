@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
 	"compilerOptions": {
 		"strict": true,
 		"outDir": "bin",
@@ -22,23 +21,5 @@
 		"rootDir": "./",
 		"allowJs": true
 	},
-	"include": ["**/*.ts", "**/*.js", "**/*.mjs", "**/*.cjs", "www/**/*.ts"]
-=======
-  "compilerOptions": {
-    "strict": true,
-    "outDir": "bin",
-    "target": "es2020",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "pretty": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true,
-    "rootDir": "./",
-    "allowJs": true
-  },
-  "include": ["**/*.ts", "**/*.js", "**/*.mjs", "**/*.cjs"]
->>>>>>> origin/master
+	"include": ["**/*.ts", "**/*.js", "**/*.mjs", "**/*.cjs", "www/**/*.ts", "vite.config.mts"]
 }
