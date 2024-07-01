@@ -55,12 +55,13 @@
         </div>
       </div>
       <div>get your smart tools here!</div>
-      <form hx-get="/api"
+      <form hx-post="/api"
       hx-target="#result>p" style="margin-top: 20px">
         <input
           type="text"
           name="prompt"
           placeholder="Enter your prompt here"
+          value="What's the weather like in hawaii?"
           style="width: 70%; padding: 10px; margin-right: 10px"
         />
         <button

@@ -11,17 +11,17 @@ var $e = async (t, e = /* @__PURE__ */ Object.create(null)) => {
 };
 async function Ie(t, e) {
   const r = await t.formData();
-  return r ? De(r, e) : {};
+  return r ? _e(r, e) : {};
 }
-function De(t, e) {
+function _e(t, e) {
   const r = /* @__PURE__ */ Object.create(null);
   return t.forEach((s, n) => {
-    e.all || n.endsWith("[]") ? _e(r, n, s) : r[n] = s;
+    e.all || n.endsWith("[]") ? De(r, n, s) : r[n] = s;
   }), e.dot && Object.entries(r).forEach(([s, n]) => {
     s.includes(".") && (Fe(r, s, n), delete r[s]);
   }), r;
 }
-var _e = (t, e, r) => {
+var De = (t, e, r) => {
   t[e] !== void 0 ? Array.isArray(t[e]) ? t[e].push(r) : t[e] = [t[e], r] : t[e] = r;
 }, Fe = (t, e, r) => {
   let s = t;
@@ -51,11 +51,11 @@ var _e = (t, e, r) => {
       }
   }
   return t;
-}, J = {}, le = (t) => {
+}, Q = {}, le = (t) => {
   if (t === "*")
     return "*";
   const e = t.match(/^\:([^\{\}]+)(?:\{(.+)\})?$/);
-  return e ? (J[t] || (e[2] ? J[t] = [t, e[1], new RegExp("^" + e[2] + "$")] : J[t] = [t, e[1], !0]), J[t]) : null;
+  return e ? (Q[t] || (e[2] ? Q[t] = [t, e[1], new RegExp("^" + e[2] + "$")] : Q[t] = [t, e[1], !0]), Q[t]) : null;
 }, Ne = (t) => {
   try {
     return decodeURI(t);
@@ -137,7 +137,7 @@ var _e = (t, e, r) => {
     c === -1 ? l = "" : (l = t.slice(c + 1, a === -1 ? void 0 : a), s && (l = re(l))), r ? (n[o] && Array.isArray(n[o]) || (n[o] = []), n[o].push(l)) : n[o] ?? (n[o] = l);
   }
   return e ? n[e] : n;
-}, Be = ye, Ue = (t, e) => ye(t, e, !0), ne = decodeURIComponent, C, x, fe, be = (fe = class {
+}, Be = ye, qe = (t, e) => ye(t, e, !0), ne = decodeURIComponent, C, x, fe, be = (fe = class {
   constructor(t, e = "/", r = [[]]) {
     d(this, "raw");
     b(this, C);
@@ -176,7 +176,7 @@ var _e = (t, e, r) => {
     return Be(this.url, t);
   }
   queries(t) {
-    return Ue(this.url, t);
+    return qe(this.url, t);
   }
   header(t) {
     if (t)
@@ -223,7 +223,7 @@ var _e = (t, e, r) => {
   get routePath() {
     return h(this, x)[0].map(([[, t]]) => t)[this.routeIndex].path;
   }
-}, C = new WeakMap(), x = new WeakMap(), fe), ke = {
+}, C = new WeakMap(), x = new WeakMap(), fe), Ue = {
   Stringify: 1,
   BeforeStream: 2,
   Stream: 3
@@ -234,15 +234,15 @@ var _e = (t, e, r) => {
       c.filter(Boolean).map((o) => ve(o, e, !1, s, n))
     ).then(() => n[0])
   )) : Promise.resolve(t);
-}, We = "text/plain; charset=UTF-8", se = (t, e = {}) => (Object.entries(e).forEach(([r, s]) => t.set(r, s)), t), q, K, I, _, A, g, m, O, $, V, T, N, z, G, pe, Y = (pe = class {
+}, We = "text/plain; charset=UTF-8", se = (t, e = {}) => (Object.entries(e).forEach(([r, s]) => t.set(r, s)), t), k, K, I, D, A, g, m, O, $, V, T, N, z, G, pe, Y = (pe = class {
   constructor(t, e) {
-    b(this, q);
+    b(this, k);
     b(this, K);
     d(this, "env", {});
     b(this, I);
     d(this, "finalized", !1);
     d(this, "error");
-    b(this, _, 200);
+    b(this, D, 200);
     b(this, A);
     b(this, g);
     b(this, m);
@@ -267,14 +267,14 @@ var _e = (t, e, r) => {
       r != null && r.append ? (h(this, g) || (p(this, $, !1), p(this, g, new Headers(h(this, m))), p(this, m, {})), h(this, g).append(t, e)) : h(this, g) ? h(this, g).set(t, e) : (h(this, m) ?? p(this, m, {}), h(this, m)[t.toLowerCase()] = e), this.finalized && (r != null && r.append ? this.res.headers.append(t, e) : this.res.headers.set(t, e));
     });
     d(this, "status", (t) => {
-      p(this, $, !1), p(this, _, t);
+      p(this, $, !1), p(this, D, t);
     });
     d(this, "set", (t, e) => {
       h(this, I) ?? p(this, I, {}), h(this, I)[t] = e;
     });
     d(this, "get", (t) => h(this, I) ? h(this, I)[t] : void 0);
     d(this, "newResponse", (t, e, r) => {
-      if (h(this, $) && !r && !e && h(this, _) === 200)
+      if (h(this, $) && !r && !e && h(this, D) === 200)
         return new Response(t, {
           headers: h(this, m)
         });
@@ -286,10 +286,10 @@ var _e = (t, e, r) => {
         const i = se(n, h(this, m));
         return new Response(t, {
           headers: i,
-          status: e.status ?? h(this, _)
+          status: e.status ?? h(this, D)
         });
       }
-      const s = typeof e == "number" ? e : h(this, _);
+      const s = typeof e == "number" ? e : h(this, D);
       h(this, m) ?? p(this, m, {}), h(this, g) ?? p(this, g, new Headers()), se(h(this, g), h(this, m)), h(this, O) && (h(this, O).headers.forEach((n, i) => {
         var a, c;
         i === "set-cookie" ? (a = h(this, g)) == null || a.append(i, n) : (c = h(this, g)) == null || c.set(i, n);
@@ -320,13 +320,13 @@ var _e = (t, e, r) => {
       const s = JSON.stringify(t);
       return h(this, m) ?? p(this, m, {}), h(this, m)["content-type"] = "application/json; charset=UTF-8", typeof e == "number" ? this.newResponse(s, e, r) : this.newResponse(s, e);
     });
-    d(this, "html", (t, e, r) => (h(this, m) ?? p(this, m, {}), h(this, m)["content-type"] = "text/html; charset=UTF-8", typeof t == "object" && (t instanceof Promise || (t = t.toString()), t instanceof Promise) ? t.then((s) => ve(s, ke.Stringify, !1, {})).then((s) => typeof e == "number" ? this.newResponse(s, e, r) : this.newResponse(s, e)) : typeof e == "number" ? this.newResponse(t, e, r) : this.newResponse(t, e)));
+    d(this, "html", (t, e, r) => (h(this, m) ?? p(this, m, {}), h(this, m)["content-type"] = "text/html; charset=UTF-8", typeof t == "object" && (t instanceof Promise || (t = t.toString()), t instanceof Promise) ? t.then((s) => ve(s, Ue.Stringify, !1, {})).then((s) => typeof e == "number" ? this.newResponse(s, e, r) : this.newResponse(s, e)) : typeof e == "number" ? this.newResponse(t, e, r) : this.newResponse(t, e)));
     d(this, "redirect", (t, e) => (h(this, g) ?? p(this, g, new Headers()), h(this, g).set("Location", t), this.newResponse(null, e ?? 302)));
     d(this, "notFound", () => (h(this, N) ?? p(this, N, () => new Response()), h(this, N).call(this, this)));
-    p(this, q, t), e && (p(this, A, e.executionCtx), this.env = e.env, p(this, N, e.notFoundHandler), p(this, G, e.path), p(this, z, e.matchResult));
+    p(this, k, t), e && (p(this, A, e.executionCtx), this.env = e.env, p(this, N, e.notFoundHandler), p(this, G, e.path), p(this, z, e.matchResult));
   }
   get req() {
-    return h(this, K) ?? p(this, K, new be(h(this, q), h(this, G), h(this, z))), h(this, K);
+    return h(this, K) ?? p(this, K, new be(h(this, k), h(this, G), h(this, z))), h(this, K);
   }
   get event() {
     if (h(this, A) && "respondWith" in h(this, A))
@@ -358,7 +358,7 @@ var _e = (t, e, r) => {
   get var() {
     return { ...h(this, I) };
   }
-}, q = new WeakMap(), K = new WeakMap(), I = new WeakMap(), _ = new WeakMap(), A = new WeakMap(), g = new WeakMap(), m = new WeakMap(), O = new WeakMap(), $ = new WeakMap(), V = new WeakMap(), T = new WeakMap(), N = new WeakMap(), z = new WeakMap(), G = new WeakMap(), pe), ue = (t, e, r) => (s, n) => {
+}, k = new WeakMap(), K = new WeakMap(), I = new WeakMap(), D = new WeakMap(), A = new WeakMap(), g = new WeakMap(), m = new WeakMap(), O = new WeakMap(), $ = new WeakMap(), V = new WeakMap(), T = new WeakMap(), N = new WeakMap(), z = new WeakMap(), G = new WeakMap(), pe), ue = (t, e, r) => (s, n) => {
   let i = -1;
   return a(0);
   async function a(c) {
@@ -379,7 +379,7 @@ var _e = (t, e, r) => {
       }
     return o && (s.finalized === !1 || l) && (s.res = o), s;
   }
-}, y = "ALL", qe = "all", Ke = ["get", "post", "put", "delete", "options", "patch"], Ee = "Can not add a route since the matcher is already built.", xe = class extends Error {
+}, y = "ALL", ke = "all", Ke = ["get", "post", "put", "delete", "options", "patch"], Ee = "Can not add a route since the matcher is already built.", xe = class extends Error {
 }, Ve = Symbol("composedHandler"), ze = (t) => t.text("404 Not Found", 404), de = (t, e) => "getResponse" in t ? t.getResponse() : (console.error(t), e.text("Internal Server Error", 500)), j, ge, Oe = (ge = class {
   constructor(e = {}) {
     d(this, "get");
@@ -413,7 +413,7 @@ var _e = (t, e, r) => {
         e.respondWith(this.dispatch(e.request, e, void 0, e.request.method));
       });
     });
-    [...Ke, qe].forEach((n) => {
+    [...Ke, ke].forEach((n) => {
       this[n] = (i, ...a) => (typeof i == "string" ? p(this, j, i) : this.addRoute(n, h(this, j), i), a.forEach((c) => {
         typeof c != "string" && this.addRoute(n, h(this, j), c);
       }), this);
@@ -529,9 +529,9 @@ var _e = (t, e, r) => {
       }
     })();
   }
-}, j = new WeakMap(), ge), ee = "[^/]+", k = ".*", W = "(?:|/.*)", U = Symbol(), Ge = new Set(".\\+*[^]$()");
+}, j = new WeakMap(), ge), ee = "[^/]+", U = ".*", W = "(?:|/.*)", q = Symbol(), Ge = new Set(".\\+*[^]$()");
 function Xe(t, e) {
-  return t.length === 1 ? e.length === 1 ? t < e ? -1 : 1 : -1 : e.length === 1 || t === k || t === W ? 1 : e === k || e === W ? -1 : t === ee ? 1 : e === ee ? -1 : t.length === e.length ? t < e ? -1 : 1 : e.length - t.length;
+  return t.length === 1 ? e.length === 1 ? t < e ? -1 : 1 : -1 : e.length === 1 || t === U || t === W ? 1 : e === U || e === W ? -1 : t === ee ? 1 : e === ee ? -1 : t.length === e.length ? t < e ? -1 : 1 : e.length - t.length;
 }
 var ie = class {
   constructor() {
@@ -542,24 +542,24 @@ var ie = class {
   insert(e, r, s, n, i) {
     if (e.length === 0) {
       if (this.index !== void 0)
-        throw U;
+        throw q;
       if (i)
         return;
       this.index = r;
       return;
     }
-    const [a, ...c] = e, o = a === "*" ? c.length === 0 ? ["", "", k] : ["", "", ee] : a === "/*" ? ["", "", W] : a.match(/^\:([^\{\}]+)(?:\{(.+)\})?$/);
+    const [a, ...c] = e, o = a === "*" ? c.length === 0 ? ["", "", U] : ["", "", ee] : a === "/*" ? ["", "", W] : a.match(/^\:([^\{\}]+)(?:\{(.+)\})?$/);
     let l;
     if (o) {
       const u = o[1];
       let f = o[2] || ee;
       if (u && o[2] && (f = f.replace(/^\((?!\?:)(?=[^)]+\)$)/, "(?:"), /\((?!\?:)/.test(f)))
-        throw U;
+        throw q;
       if (l = this.children[f], !l) {
         if (Object.keys(this.children).some(
-          (R) => R !== k && R !== W
+          (R) => R !== U && R !== W
         ))
-          throw U;
+          throw q;
         if (i)
           return;
         l = this.children[f] = new ie(), u !== "" && (l.varIndex = n.varIndex++);
@@ -567,9 +567,9 @@ var ie = class {
       !i && u !== "" && s.push([u, l.varIndex]);
     } else if (l = this.children[a], !l) {
       if (Object.keys(this.children).some(
-        (u) => u.length > 1 && u !== k && u !== W
+        (u) => u.length > 1 && u !== U && u !== W
       ))
-        throw U;
+        throw q;
       if (i)
         return;
       l = this.children[a] = new ie();
@@ -583,7 +583,7 @@ var ie = class {
     });
     return typeof this.index == "number" && r.unshift(`#${this.index}`), r.length === 0 ? "" : r.length === 1 ? r[0] : "(?:" + r.join("|") + ")";
   }
-}, Qe = class {
+}, Je = class {
   constructor() {
     d(this, "context", { varIndex: 0 });
     d(this, "root", new ie());
@@ -617,7 +617,7 @@ var ie = class {
     const r = [], s = [];
     return t = t.replace(/#(\d+)|@(\d+)|\.\*\$/g, (n, i, a) => typeof i < "u" ? (r[++e] = Number(i), "$()") : (typeof a < "u" && (s[Number(a)] = ++e), "")), [new RegExp(`^${t}`), r, s];
   }
-}, je = [], Je = [/^$/, [], /* @__PURE__ */ Object.create(null)], Z = /* @__PURE__ */ Object.create(null);
+}, je = [], Qe = [/^$/, [], /* @__PURE__ */ Object.create(null)], Z = /* @__PURE__ */ Object.create(null);
 function Pe(t) {
   return Z[t] ?? (Z[t] = new RegExp(
     t === "*" ? "" : `^${t.replace(
@@ -631,9 +631,9 @@ function Ye() {
 }
 function Ze(t) {
   var l;
-  const e = new Qe(), r = [];
+  const e = new Je(), r = [];
   if (t.length === 0)
-    return Je;
+    return Qe;
   const s = t.map(
     (u) => [!/\*|\/:/.test(u[0]), ...u]
   ).sort(
@@ -646,13 +646,13 @@ function Ze(t) {
     try {
       E = e.insert(w, f, S);
     } catch (P) {
-      throw P === U ? new xe(w) : P;
+      throw P === q ? new xe(w) : P;
     }
-    S || (r[f] = v.map(([P, D]) => {
+    S || (r[f] = v.map(([P, _]) => {
       const H = /* @__PURE__ */ Object.create(null);
-      for (D -= 1; D >= 0; D--) {
-        const [X, Q] = E[D];
-        H[X] = Q;
+      for (_ -= 1; _ >= 0; _--) {
+        const [X, J] = E[_];
+        H[X] = J;
       }
       return [P, H];
     }));
@@ -857,20 +857,20 @@ var et = class {
           ...this.gHSets(v.children["*"], t, w.params, /* @__PURE__ */ Object.create(null))
         ), r.push(...this.gHSets(v, t, w.params, /* @__PURE__ */ Object.create(null)))) : f.push(v));
         for (let E = 0, P = w.patterns.length; E < P; E++) {
-          const D = w.patterns[E], H = { ...w.params };
-          if (D === "*") {
+          const _ = w.patterns[E], H = { ...w.params };
+          if (_ === "*") {
             const te = w.children["*"];
             te && (r.push(...this.gHSets(te, t, w.params, /* @__PURE__ */ Object.create(null))), f.push(te));
             continue;
           }
           if (l === "")
             continue;
-          const [X, Q, M] = D, F = w.children[X], ae = i.slice(c).join("/");
+          const [X, J, M] = _, F = w.children[X], ae = i.slice(c).join("/");
           if (M instanceof RegExp && M.test(ae)) {
-            H[Q] = ae, r.push(...this.gHSets(F, t, w.params, H));
+            H[J] = ae, r.push(...this.gHSets(F, t, w.params, H));
             continue;
           }
-          (M === !0 || M instanceof RegExp && M.test(l)) && typeof X == "string" && (H[Q] = l, u === !0 ? (r.push(...this.gHSets(F, t, H, w.params)), F.children["*"] && r.push(...this.gHSets(F.children["*"], t, H, w.params))) : (F.params = H, f.push(F)));
+          (M === !0 || M instanceof RegExp && M.test(l)) && typeof X == "string" && (H[J] = l, u === !0 ? (r.push(...this.gHSets(F, t, H, w.params)), F.children["*"] && r.push(...this.gHSets(F.children["*"], t, H, w.params))) : (F.params = H, f.push(F)));
         }
       }
       n = f;
@@ -903,7 +903,42 @@ var et = class {
   }
 };
 const oe = new st();
-oe.get("/api/*", (t) => new Response("Hello, world!"));
+oe.post("/api/*", async (t) => {
+  const e = t.req.query("prompt");
+  console.log(e), console.log(t.req.url);
+  const r = await t.env.AI.run(
+    "@hf/nousresearch/hermes-2-pro-mistral-7b",
+    {
+      messages: [
+        {
+          role: "user",
+          content: e
+        }
+      ],
+      tools: [
+        {
+          name: "getWeather",
+          description: "Return the weather for a latitude and longitude",
+          parameters: {
+            type: "object",
+            properties: {
+              latitude: {
+                type: "string",
+                description: "The latitude for the given location"
+              },
+              longitude: {
+                type: "string",
+                description: "The longitude for the given location"
+              }
+            },
+            required: ["latitude", "longitude"]
+          }
+        }
+      ]
+    }
+  );
+  return new Response(JSON.stringify(r.tool_calls));
+});
 oe.get("*", (t) => t.env.ASSETS.fetch(
   t.req.raw
 ));
