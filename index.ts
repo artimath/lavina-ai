@@ -2,7 +2,6 @@
 import * as cloudflare from '@pulumi/cloudflare';
 import * as pulumi from '@pulumi/pulumi';
 
-// Import the program's configuration settings.
 const config = new pulumi.Config();
 const accountID = config.require('cf-account-id');
 const domain = config.require('domain');
