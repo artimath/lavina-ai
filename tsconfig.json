@@ -18,6 +18,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true,
     "rootDir": "./",
     "allowJs": true
   },

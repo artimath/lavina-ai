@@ -21,10 +21,17 @@
     "wrangler": "^3.62.0"
   },
   "dependencies": {
+    "@cloudflare/ai-utils": "^1.0.1",
+    "@effect/data": "^0.18.7",
+    "@effect/io": "^0.41.2",
+    "@effect/schema": "^0.68.15",
     "@pulumi/cloudflare": "^5.33.1",
     "@pulumi/pulumi": "^3.113.0",
+    "effect": "^3.4.6",
+    "fast-check": "^3.19.0",
     "hono": "^4.4.10",
-    "itty-router": "^5.0.17"
+    "itty-router": "^5.0.17",
+    "schema": "link:\n@effect/schema"
   },
   "volta": {
     "node": "20.15.0"
