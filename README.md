@@ -1,56 +1,61 @@
-# Lavina AI
+# Lavina AI: Function Calling as a Service (FCaaS)
 
 ## Project Overview
-Lavina AI is a cutting-edge serverless application built on Cloudflare Workers, designed to provide a versatile and efficient API with advanced routing capabilities. It aims to simplify the development of complex web applications by offering powerful features such as redirection, proxying, and AI integration, all while leveraging the global distribution and scalability of Cloudflare's network.
+Lavina AI is a cutting-edge serverless application built on Cloudflare Workers, designed to provide Function Calling as a Service (FCaaS). This innovative platform allows developers to define, deploy, and execute custom functions in a serverless environment, leveraging the global distribution and scalability of Cloudflare's network.
 
 ## Key Features
-- **Intelligent Routing**: Utilizes itty-router for efficient request handling and API endpoint management.
-- **Flexible Redirection**: Implements a customizable redirection system accessible via the `/redirect` endpoint.
-- **Secure Proxying**: Offers a robust proxying functionality through the `/proxy` endpoint, allowing for content modification and secure data transfer.
-- **AI Integration**: Seamlessly incorporates Cloudflare's AI capabilities, enabling advanced machine learning tasks directly within the application.
-- **Serverless Architecture**: Leverages Cloudflare Workers for a truly serverless deployment, ensuring high availability and automatic scaling.
+- **Dynamic Function Execution**: Execute custom functions on-demand without managing infrastructure.
+- **Serverless Architecture**: Leverages Cloudflare Workers for automatic scaling and high availability.
+- **AI-Powered Function Optimization**: Utilizes Cloudflare's AI capabilities to optimize function execution and resource allocation.
+- **Secure Execution Environment**: Runs functions in isolated environments for enhanced security.
+- **Real-time Monitoring**: Provides insights into function performance and execution metrics.
 
 ## Code Review and Highlights
 
-### 1. Modular Router Implementation
-**File**: `broad-water-de89/src/index.ts`
+### 1. Function Registration and Execution
+**File**: `src/fcaas.ts`
 ```typescript
-import apiRouter from './router';
+export async function registerFunction(name: string, code: string): Promise<void> {
+    // Implementation for registering a new function
+}
 
-// ...
-
-if (url.pathname.startsWith('/api/')) {
-    return apiRouter.handle(request);
+export async function executeFunction(name: string, params: any): Promise<any> {
+    // Implementation for executing a registered function
 }
 ```
-This implementation demonstrates a clean separation of concerns by using a dedicated router for API requests, enhancing maintainability and scalability.
+This core functionality allows dynamic registration and execution of user-defined functions.
 
-### 2. AI Binding Configuration
+### 2. AI Integration for Function Optimization
 **File**: `wrangler.toml`
 ```toml
 [ai]
 binding = "AI"
 ```
-This configuration showcases the project's integration with Cloudflare's AI capabilities, opening up possibilities for advanced machine learning tasks within the application.
+Leverages Cloudflare's AI capabilities for intelligent function optimization and resource management.
 
-### 3. Smart Build and Development Scripts
-**File**: `package.json`
-```json
-"scripts": {
-  "dev-html": "vite serve www",
-  "dev-worker": "vite build && wrangler pages dev --live-reload",
-  "build": "vite build"
-}
+### 3. API Router for Function Management
+**File**: `src/index.ts`
+```typescript
+import { Router } from 'itty-router';
+import { registerFunction, executeFunction } from './fcaas';
+
+const router = Router();
+
+router.post('/register', async (request) => {
+    // Handle function registration
+});
+
+router.post('/execute', async (request) => {
+    // Handle function execution
+});
 ```
-These scripts demonstrate a sophisticated development setup, allowing for efficient HTML development and Worker testing with live reloading.
+Implements a robust API for managing and executing functions.
 
 ## Technologies Used
 - **TypeScript**: Primary programming language
 - **Cloudflare Workers**: Serverless platform for deployment
 - **itty-router**: Lightweight routing library
-- **Vite**: Build tool and development server
-- **Wrangler**: Cloudflare Workers CLI tool
-- **Hono**: Web framework for Cloudflare Workers (as a dependency)
+- **Cloudflare AI**: For function optimization and intelligent scaling
 
 ## Getting Started
 1. Clone the repository:
@@ -59,29 +64,29 @@ These scripts demonstrate a sophisticated development setup, allowing for effici
    ```
 2. Install dependencies:
    ```
-   pnpm install
+   npm install
    ```
 3. Start the development server:
    ```
-   pnpm run dev-worker
-   ```
-4. For HTML development:
-   ```
-   pnpm run dev-html
+   npm run dev
    ```
 
 ## Usage
-After starting the development server, you can access the following endpoints:
-- Redirection: `/redirect?redirectUrl=https://example.com/`
-- Proxying: `/proxy?modify&proxyUrl=https://example.com/`
-- API: `/api/todos`
+After starting the development server, you can interact with the FCaaS platform:
 
-Example:
-```
-curl http://localhost:8787/api/todos
-```
+1. Register a new function:
+   ```
+   curl -X POST http://localhost:8787/register -H "Content-Type: application/json" -d '{"name": "myFunction", "code": "function myFunction(x, y) { return x + y; }"}'
+   ```
+
+2. Execute a registered function:
+   ```
+   curl -X POST http://localhost:8787/execute -H "Content-Type: application/json" -d '{"name": "myFunction", "params": [5, 3]}'
+   ```
 
 ## Contributing
+We welcome contributions to Lavina AI! Please follow these steps:
+
 1. Fork the repository
 2. Create your feature branch: `git checkout -b feature/AmazingFeature`
 3. Commit your changes: `git commit -m 'Add some AmazingFeature'`
